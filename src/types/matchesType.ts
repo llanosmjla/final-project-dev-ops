@@ -1,4 +1,3 @@
-import { Result } from "postcss";
 import { Area, CurrentSeasonLeague } from "./leaguesType";
 
 export type FilterProps = {
@@ -95,10 +94,6 @@ export type Referees = {
     name: string;
     type: string;
     nationality: string;
-}
-
-export type DetailsMatch = {
-    
 }
 
 

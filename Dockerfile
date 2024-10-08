@@ -1,23 +1,49 @@
-# Use the official Node.js 18 image as the base image
-FROM node:18-alpine
+#use a image base to create a new image
+FROM node:18-alpine AS base
 
-# Set the working directory
+FROM base AS builder
+
+# Update package index and install libc6-compat for glibc compatibility on Alpine Linux
+RUN apk update
+RUN apk add --no-cache libc6-compat
+
+#set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+#copy the package.json and package-lock.json
 COPY package*.json ./
 
-# Install dependencies
+#install the dependencies
 RUN npm install
 
-# Copy the rest of the application code
+#copy the source code
 COPY . .
 
-# Build the Next.js application
+#build the application
 RUN npm run build
 
-# Expose the port the app runs on
+# Stage of execution
+FROM base AS runner
+
+#set the working directory
+WORKDIR /app
+
+# add a user no-root to run the application
+RUN addgroup -sytem --gid 1001 appgroup && adduser -system --uid 1001 --ingroup appgroup appuser
+USER appuser
+
+#copy the build files from the builder stage
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+
+#expose the port
 EXPOSE 3000
 
-# Start the Next.js application
+#run the application
 CMD ["npm", "start"]
+
+
+
+
+
+

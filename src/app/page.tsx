@@ -1,9 +1,7 @@
-import Image from "next/image";
 import CountriesContainerCli from "./sections/countries/CountriesContainerCli";
 import CountriesListSer from "./sections/countries/CountriesListSer";
 import LeaguesContainerCli from "./sections/leagues/leaguesContainerCli";
 import { Suspense } from "react";
-import { getCountries } from "@/services/getCountries";
 import LeaguesListSer from "./sections/leagues/leaguesListSer";
 
 export default async function Home() {

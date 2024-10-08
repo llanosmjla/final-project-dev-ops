@@ -17,19 +17,13 @@ import {
     MenuButton,
 } from '@headlessui/react'
 import {
-    RefreshCcwIcon,
     MenuIcon,
-    ChartPieIcon,
-    MousePointerClickIcon,
-    FingerprintIcon,
-    Grid2x2PlusIcon,
     XIcon,
     Tv2Icon,
     ArrowBigDownDash,
 } from 'lucide-react'
 import { ChevronDownIcon} from 'lucide-react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { LeagueResponse } from '@/types/leaguesType'
 import { getLeagues } from '@/services/getLeagues'
 
@@ -49,19 +43,6 @@ const leagueTournaments = [
     { name: 'Liga de Paraguay', href: '/liga-de-paraguay', image: '/1.png' },
 ]
 
-/* const InternationalTournaments = [
-    { name: 'Copa Libertadores', href: '/copa-libertadores', icon: ChartPieIcon },
-    { name: 'Copa Sudamericana', href: '/copa-sudamericana', icon: MousePointerClickIcon },
-    { name: 'Champions League', href: '/champions-league', icon: FingerprintIcon },
-    { name: 'Europa League', href: '/europa-league', icon: Grid2x2PlusIcon },
-    { name: 'Copa del Mundo', href: '/copa-del-mundo', icon: RefreshCcwIcon },
-    { name: 'Copa América', href: '/copa-america', icon: FingerprintIcon },
-    { name: 'Eurocopa', href: '/eurocopa', icon: Grid2x2PlusIcon },
-    { name: 'Copa Oro', href: '/copa-oro', icon: RefreshCcwIcon },
-    { name: 'Copa de Asia', href: '/copa-de-asia', icon: RefreshCcwIcon },
-    { name: 'Copa de África', href: '/copa-de-africa', icon: RefreshCcwIcon },
-    { name: 'Copa de Oceanía', href: '/copa-de-oceania', icon: RefreshCcwIcon },
-] */
 
 const pageRoutes = [
     { name: 'Inicio', href: '/', current: true, dropdown: false, nameDropdown: '' },
@@ -82,8 +63,7 @@ const userOptions = [
 
 
 export default function NavBar() {
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const routeUrl = usePathname();
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const [league, setLeague] = useState<LeagueResponse | null>(null);
 

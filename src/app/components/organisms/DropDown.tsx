@@ -2,7 +2,7 @@
 
 import {Country } from "@/types/coutryType";
 import { CountriesResponse } from "@/types/coutryType";
-import { ArrowBigDownDash, AwardIcon, FileAxis3DIcon, FileQuestionIcon } from "lucide-react";
+import { ArrowBigDownDash, AwardIcon, FileAxis3DIcon} from "lucide-react";
 import { useState } from "react";
 
 
@@ -12,9 +12,9 @@ type CountriesByParentArea = {
 }
 
 const DropDown = ({ countries }: { countries: CountriesResponse }) => {
-    const [openIndex, setOpenIndex] = useState(null);
+    const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-    const toggleAccordion = (index: any) => {
+    const toggleAccordion = (index:number) => {
         setOpenIndex(openIndex === index ? null : index);
     };
 

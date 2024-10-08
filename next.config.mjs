@@ -2,7 +2,19 @@
 const nextConfig = {
 
     images: {
-        domains: ['res.cloudinary.com', 'crests.football-data.org'],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'res.cloudinary.com',
+                pathname: '/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'crests.football-data.org',
+                port: '',
+                pathname: '/**',
+            },
+        ],
     },
 };
 

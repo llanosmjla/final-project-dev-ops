@@ -1,0 +1,12 @@
+# here is the content of the .dockerignore file
+
+
+.git
+.results
+scripts
+*Dockerfile*
+node_modules
+.env
+.env.local
+.env.development.local
+

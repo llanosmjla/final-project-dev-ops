@@ -1,9 +1,5 @@
 'use client';
-
-import { getLeagues } from "@/services/getLeagues";
-import { getLeaguesParams } from "@/services/getLeaguesParams";
-import { LeagueParamsResponse } from "@/types/leaguesType";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from 'next/image';
 import { MatchesResponse } from "@/types/matchesType";
 import { getMatches } from "@/services/getMatches";
