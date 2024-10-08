@@ -42,10 +42,14 @@ export default function LeagueCard( {competitions} : {competitions: Competitions
                         >
                             <p
                                 className="text-xs font-medium px-2 bg-red-700 rounded-full"
-                            >Start Date</p>
+                            >{competitions.currentSeason.currentMatchday}</p>
+                            
                             <p
                                 className="text-xs font-medium px-2 bg-red-700 rounded-full"
-                            >End Date</p>
+                            >{competitions.currentSeason.startDate}</p>
+                            <p
+                                className="text-xs font-medium px-2 bg-red-700 rounded-full"
+                            >{competitions.currentSeason.endDate}</p>
                         </div>
                         <div
                             className="flex w-full p-3 gap-4 justify-center items-center"
