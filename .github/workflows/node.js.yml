@@ -2,14 +2,9 @@ name: DevOps-usfx CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
-
-  
-  # develop
-  # feature/tarea
-  # fix / tarea
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -19,7 +14,6 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x, 20.x, 21.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v4
@@ -28,6 +22,13 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm i
+    
+    - name: Set environment variables
+      run: |
+        echo "API_URL=${{ secrets.API_URL }}" >> $GITHUB_ENV
+        echo "VERSION=${{ secrets.VERSION }}" >> $GITHUB_ENV
+        echo "API_KEY=${{ secrets.API_KEY }}" >> $GITHUB_ENV
+
+    - run: npm install
     - run: npm run lint
     - run: npm run build --if-present
