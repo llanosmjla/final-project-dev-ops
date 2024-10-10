@@ -5,6 +5,7 @@ import { getCountries } from "@/services/getCountries";
 
 export default async function CountriesListSer() {
     const data = await getCountries({endpoint: '/areas'});
+    console.log("Data countries", data);
 
     return (
 

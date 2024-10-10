@@ -4,14 +4,14 @@
 
 import { DataRequest} from "@/types/allType";
 import { LeagueParamsResponse} from "@/types/leaguesType";
-import { Options } from "@/util/Options";
+import { Options, URL_API, VERSION } from "@/util/Options";
 
 
 
 export const getLeaguesParams = async ({endpoint}: DataRequest): Promise<LeagueParamsResponse> => {
     try {
         let url = '';
-        url = `${process.env.URL_API}/${process.env.VERSION}${endpoint}`;
+        url = `${URL_API}/${VERSION}${endpoint}`;
         const response = await fetch(url, Options);
         const data = await response.json();
         return data;
