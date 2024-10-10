@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -22,12 +21,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    
-    - name: Set environment variables
+
+    - name: Create .env.production
       run: |
-        echo "API_URL=${{ secrets.API_URL }}" >> $GITHUB_ENV
-        echo "VERSION=${{ secrets.VERSION }}" >> $GITHUB_ENV
-        echo "API_KEY=${{ secrets.API_KEY }}" >> $GITHUB_ENV
+        echo "API_URL=${{ secrets.API_URL }}" >> .env.production
+        echo "VERSION=${{ secrets.VERSION }}" >> .env.production
+        echo "API_KEY=${{ secrets.API_KEY }}" >> .env.production
 
     - run: npm install
     - run: npm run lint
