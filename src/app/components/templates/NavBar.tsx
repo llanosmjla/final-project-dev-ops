@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import {
     Dialog,
     DialogPanel,
@@ -70,7 +71,6 @@ export default function NavBar() {
     useEffect(() => {
         const fetchLeagues = async () => {
             const res = await getLeagues({ endpoint: '/competitions' });
-
             setLeague(res);
         }
         fetchLeagues();
@@ -105,7 +105,12 @@ export default function NavBar() {
                 <div className="flex lg:flex-1">
                     <a href="/" className="-m-2.5 p-1.5 text-center flex flex-col justify-center items-center">
                         <span className="sr-only">Your Company</span>
-                        <img alt="Apps Futbol" src="/1.png" className="w-24" />
+                        <Image 
+                            alt="Apps Futbol" 
+                            src="/1.png" 
+                            width={48}
+                            height={48}
+                            className="w-24" />
                         <h1 className="text-xl font-bold text-red-700">World Football</h1>
                     </a>
                 </div>
@@ -151,9 +156,11 @@ export default function NavBar() {
                                                     className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
                                                 >
                                                     <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg hover:bg-gray-50 group-hover:bg-white">
-                                                        <img
+                                                        <Image
                                                             alt=""
                                                             src={item.image}
+                                                            width={24}
+                                                            height={24}
                                                             className="h-6 w-6"
                                                         />
                                                     </div>
@@ -194,11 +201,7 @@ export default function NavBar() {
                                             <span className="sr-only">Open user options</span>
                                             <Tv2Icon aria-hidden="true" className="h-6 w-6 text-gray-100" />
                                             <ArrowBigDownDash aria-hidden="true" className="h-4 w-4 text-gray-100" />
-                                            {/* <img
-                                                alt=""
-                                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                                className="h-8 w-8 rounded-full"
-                                            /> */}
+                                            
                                         </MenuButton>
                                     </div>
                                     <MenuItems
@@ -219,55 +222,9 @@ export default function NavBar() {
 
                                         
                                         <hr />
-                                        {/* Section for change career */}
-                                        {/* <MenuItem>
-                                            <Listbox value={currentCareer} onChange={changeCareer}>
-                                                {/* <Label className="text-sm font-semibold leading-6 text-gray-100">Carrera:</Label> }
-                                                <div className="relative w-full">
-                                                    <ListboxButton className="relative flex w-full py-2 justify-between text-sm leading-6 text-gray-950 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 hover:bg-blue-300">
-                                                        <span
-                                                            className="block truncate px-4"
-                                                        >{currentCareer}</span>
-                                                        <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                                            <ArrowDownUpIcon aria-hidden="true" className="h-4 w-4 text-gray-950" />
-                                                        </span>
-                                                    </ListboxButton>
-                                                    <ListboxOptions
-                                                        className="absolute z-10 w-60 mt-1 bg-gray-100 origin-top-right overflow-hidden rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-                                                    >
-                                                        {careers.map((item, index) => (
-                                                            <ListboxOption
-                                                                key={index}
-                                                                value={item.name}
-                                                                className={({ active }) => `${active ? 'bg-gray-100' : 'text-red-800'} cursor-default select-none relative py-2 pl-3 pr-9`}
-                                                            >
-                                                                {({ selected }) => (
-                                                                    <span className={`${selected ? 'font-semibold' : 'font-normal'} block text-teal-800 hover:text-teal-500`}>
-                                                                        {item.name}
-                                                                    </span>
-                                                                )}
-                                                            </ListboxOption>
-                                                        ))}
-                                                    </ListboxOptions>
-                                                </div>
-                                            </Listbox>
-                                        </MenuItem> */}
+                                       
                                         <hr />
-                                        {/* <MenuItem>
-                                            <div
-                                                className="flex w-full h-full text-sm text-gray-700 data-[focus]:bg-gray-100"
-                                            >
-                                                <button
-                                                    type="button"
-                                                    className="flex w-full px-4 py-2 text-sm text-gray-950 data-[focus]:bg-gray-100 hover:bg-gray-400 focus:outline-none"
-                                                    onClick={() => signOut()}
-                                                >
-                                                    Cerrar Sesión
-                                                </button>
-
-                                            </div>
-
-                                        </MenuItem> */}
+                                       
                                     </MenuItems>
                                 </Menu>
                             </div>
@@ -289,9 +246,11 @@ export default function NavBar() {
                         </button>
                         <a href="#" className="-m-1.5 p-1.5">
                             <span className="sr-only">usfx virtual</span>
-                            <img
+                            <Image
                                 alt=""
-                                src="/logo_usfx.png"
+                                src="/1.png"
+                                width={48}
+                                height={48}
                                 className="h-8 w-auto"
                             />
                         </a>
@@ -318,9 +277,12 @@ export default function NavBar() {
                                                                 className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
                                                             >
                                                                 <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg hover:bg-gray-50">
-                                                                    <img
+                                                                    <Image
                                                                         alt=""
                                                                         src={item.image}
+                                                                        width={24}
+                                                                        height={24}
+
                                                                         className="h-6 w-6"
                                                                     />
                                                                 </div>

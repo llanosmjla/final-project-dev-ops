@@ -1,49 +1,47 @@
-#use a image base to create a new image
-FROM node:18-alpine AS base
+# Etapa de dependencias
+FROM node:18-alpine AS dependencies
+WORKDIR /app
+COPY package*.json ./
+RUN npm install --frozen-lockfile
 
-FROM base AS builder
-
-# Update package index and install libc6-compat for glibc compatibility on Alpine Linux
-RUN apk update
-RUN apk add --no-cache libc6-compat
-
-#set the working directory
+# Etapa de build
+FROM node:18-alpine AS builder
 WORKDIR /app
 
-#copy the package.json and package-lock.json
-COPY package*.json ./
-
-#install the dependencies
-RUN npm install
-
-#copy the source code
+# Copiar los módulos de la etapa de dependencias
+COPY --from=dependencies /app/node_modules ./node_modules
 COPY . .
 
-#build the application
+# Aceptar las variables de entorno como build arguments
+#ARG NEXT_PUBLIC_API_URL
+ARG URL_API
+ARG VERSION
+ARG API_KEY
+
+# Pasar las variables de entorno al entorno de ejecución
+#ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+ENV URL_API=${URL_API}
+ENV VERSION=${VERSION}
+ENV API_KEY=${API_KEY}
+
+# Build de la aplicación, las variables de entorno serán utilizadas por Next.js
 RUN npm run build
 
-# Stage of execution
-FROM base AS runner
-
-#set the working directory
+# Etapa de producción
+FROM node:18-alpine AS runner
 WORKDIR /app
 
-# add a user no-root to run the application
-RUN addgroup -sytem --gid 1001 appgroup && adduser -system --uid 1001 --ingroup appgroup appuser
-USER appuser
-
-#copy the build files from the builder stage
+# Copiar el código necesario
 COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
+COPY package*.json ./
+COPY public ./public
+COPY next.config.mjs ./
 
-#expose the port
+# Instalar dependencias de producción
+RUN npm install --prod
+
+# Exponer el puerto de la aplicación
 EXPOSE 3000
 
-#run the application
-CMD ["npm", "start"]
-
-
-
-
-
-
+# Iniciar la aplicación
+CMD ["npm", "run", "start"]
