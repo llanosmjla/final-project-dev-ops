@@ -1,47 +1,47 @@
-# Etapa de dependencias
-FROM node:18-alpine AS dependencies
+# Etapa 1: Construcción
+FROM node:18-alpine AS builder
+
+# Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
-COPY package*.json ./
+
+# Copia los archivos de configuración necesarios para la instalación
+COPY package.json package-lock.json* ./ 
+
+# Instala las dependencias necesarias para construir la aplicación
 RUN npm install --frozen-lockfile
 
-# Etapa de build
-FROM node:18-alpine AS builder
-WORKDIR /app
-
-# Copiar los módulos de la etapa de dependencias
-COPY --from=dependencies /app/node_modules ./node_modules
+# Copia el resto del código fuente de la aplicación
 COPY . .
 
-# Aceptar las variables de entorno como build arguments
-#ARG NEXT_PUBLIC_API_URL
-ARG URL_API
-ARG VERSION
-ARG API_KEY
+# Copia el archivo de entorno de producción
+COPY .env.production .env.production
 
-# Pasar las variables de entorno al entorno de ejecución
-#ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
-ENV URL_API=${URL_API}
-ENV VERSION=${VERSION}
-ENV API_KEY=${API_KEY}
-
-# Build de la aplicación, las variables de entorno serán utilizadas por Next.js
+# Crea la build de producción de Next.js
 RUN npm run build
 
-# Etapa de producción
+# Etapa 2: Producción
 FROM node:18-alpine AS runner
+
+# Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copiar el código necesario
+# Copia los archivos estáticos generados en la etapa de build
 COPY --from=builder /app/.next ./.next
-COPY package*.json ./
-COPY public ./public
-COPY next.config.mjs ./
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/next.config.js ./next.config.js
 
-# Instalar dependencias de producción
-RUN npm install --prod
+# Copia el archivo de entorno de producción
+COPY --from=builder /app/.env.production .env.production
 
-# Exponer el puerto de la aplicación
+# Instala solo las dependencias necesarias para la ejecución de producción
+RUN npm install --production --frozen-lockfile
+
+# Expone el puerto donde correrá la aplicación
 EXPOSE 3000
 
-# Iniciar la aplicación
-CMD ["npm", "run", "start"]
+# Establece la variable de entorno para producción
+ENV NODE_ENV production
+
+# Comando para iniciar la aplicación
+CMD ["npm", "start"]
